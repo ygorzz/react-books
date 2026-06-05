@@ -1,45 +1,54 @@
-import fs from "fs";
-
-const filePath = "./livros.json";
+import Erro404 from "../errors/Erro404.js";
+import RequisicaoIncorreta from "../errors/RequisicaoIncorreta.js";
+import * as LivroRepository from "../repositories/livro.js";
 
 async function getTodosLivros() {
-    const lista = await fs.promises.readFile(filePath);
-    if (lista.length === 0) return false; // retornar array vazio ao invés de false
-    return JSON.parse(lista);
+    const livros = await LivroRepository.findAll();
+    if (livros.length === 0) return [];
+    return livros;
 }
 
-async function getLivroPorId(id){
-    const listaLivros = await getTodosLivros();
-    const index = listaLivros.findIndex(livro => livro.id === id);
-    if(index === -1) return {message: "Livro não encontrado"};
-    return listaLivros[index]; 
-}
-
-async function addLivros(dados) {
-    let dadosFinais = [];
-    const dadosAtuais = await getTodosLivros();
-    if (!dadosAtuais) {
-        dadosFinais.push(...dados);
-    } else {
-        dadosFinais.push(...dadosAtuais, ...dados)
+async function getLivroPorId(id) {
+    const livros = await LivroRepository.findAll();
+    const index = livros.findIndex(livro => livro.id === id);
+    if (index === -1) {
+        throw new Erro404();
     }
-    await fs.promises.writeFile(filePath, JSON.stringify(dadosFinais, null, 2));
+    return livros[index];
 }
 
-async function patchLivros(id, atualizacao) {
-    const listaLivros = await getTodosLivros();
-    const index = listaLivros.findIndex(livro => livro.id === id);
-    const livroAtualizado = {...listaLivros[index], ...atualizacao[0]};
-    listaLivros[index] = livroAtualizado;
-    await fs.promises.writeFile(filePath, JSON.stringify(listaLivros, null, 2));
+async function addLivro(livro) {
+    if (!livro.titulo) {
+        throw new RequisicaoIncorreta("Título do livro é obrigatório")
+    }
+    const livrosAtuais = await LivroRepository.findAll();
+    livrosAtuais.push(livro)
+    await LivroRepository.save(livrosAtuais);
+}
+
+async function updateLivros(id, atualizacao) {
+    const campos = Object.keys(atualizacao);
+    if (campos.length === 0) {
+        throw new RequisicaoIncorreta("É necessário ao menos um campo a ser atualizado");
+    }
+    const livros = await LivroRepository.findAll();
+    const index = livros.findIndex(livro => livro.id === id);
+    if (index === -1) {
+        throw new Erro404();
+    }
+    const livroAtualizado = { ...livros[index], ...atualizacao };
+    livros[index] = livroAtualizado;
+    await LivroRepository.save(livros)
 }
 
 async function deleteLivros(id) {
-    const listaLivros = await getTodosLivros();
-    const index = listaLivros.findIndex(livro => livro.id === id);
-    const novaLista = listaLivros.filter(livro => livro.id !== id); 
+    const livros = await LivroRepository.findAll();
+    const index = livros.findIndex(livro => livro.id === id);
+    if (index === -1) {
+        throw new Erro404();
+    }
+    const novosLivros = livros.filter(livro => livro.id !== id);
+    await LivroRepository.save(novosLivros);
+}
 
-    await fs.promises.writeFile(filePath, JSON.stringify(novaLista, null, 2));
-} 
-
-export {getTodosLivros, getLivroPorId, addLivros, patchLivros, deleteLivros};
+export { getTodosLivros, getLivroPorId, addLivro, updateLivros, deleteLivros };
