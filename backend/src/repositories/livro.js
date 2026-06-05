@@ -5,12 +5,12 @@ import path from "path";
 const filePath = path.resolve("./livros.json");
 
 async function findAll() {
-    const livros = await fs.promises.readFile(filePath, "utf-8");
-    return JSON.parse(livros);
+  const livros = await fs.promises.readFile(filePath, "utf-8");
+  return JSON.parse(livros);
 }
 
 async function save(livro) {
-    await fs.promises.writeFile(filePath, JSON.stringify(livro, null, 2));
+  await fs.promises.writeFile(filePath, JSON.stringify(livro, null, 2));
 }
 
-export { findAll, save }  
+export { findAll, save };  
