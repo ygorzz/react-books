@@ -1,7 +1,7 @@
 import Input from "../Input/index.js";
 import styled from "styled-components";
-import { useState } from "react";
-import { livros } from "./dadosPesquisa.js";
+import { useEffect, useState } from "react";
+import { getLivros } from "../../services/livros.js";
 
 const SearchContainer = styled.section`
   text-align: center;
@@ -42,10 +42,24 @@ const Resultado = styled.div`
 
 function Search() {
   // Lógica de estado para acompanhar e renderizar automaticamente o valor da busca na interface
-  // textoDigitado -> variável que armazena o texto digitado pelo user
-  // setTextoDigitado -> função que atualiza o texto digitado e avisa o react para renderizar novamente
-  // useState("") -> inicia o texto digitado vazio (como se fosse um let textoDigitado = "") e retorna a variável e a função acima
+  // livrosPesquisados -> variável que armazena o texto digitado pelo user
+  // setlivrosPesquisados -> função que atualiza o texto digitado e avisa o react para renderizar novamente
+  // useState("") -> inicia o texto digitado vazio (como se fosse um let livrosPesquisados = "") e retorna a variável e a função acima
   const [livrosPesquisados, setLivrosPesquisados] = useState([]);
+  const [livros, setLivros] = useState([]);
+
+  // useEffect -> sincroniza um componente a um serviço externo
+  // [] -> executa o codigo de useEffect uma única vez, sepre que o componente é montado
+  // Ou seja, sempre que chegamos nessa rota, é feita uma req para api, recebendo a res e atualizando o estado de livros.
+  useEffect(() => {
+    fetchLivros();
+  }, []);
+
+  // Essa função é criada pois useEffect não aceita o uso do async/await
+  async function fetchLivros(){
+    const livrosDaApi = await getLivros()
+    setLivros(livrosDaApi); 
+  }
 
   return (
     <SearchContainer>
@@ -55,7 +69,7 @@ function Search() {
         type="text"
         placeholder="Procure aqui sua leitura"
         // Pega o valor do elemento (target) que disparou o evento, atualiza e renderiza na interface
-        onBlur={(evento) => {
+        onChange={(evento) => {
           const resultado = livros.filter((livro) =>
             livro.titulo.includes(evento.target.value),
           );
@@ -67,7 +81,6 @@ function Search() {
         return (
           <Resultado>
                 <p>{livro.titulo}</p>
-                <img src={livro.src} alt="livro" />
           </Resultado>
         );
       })}
