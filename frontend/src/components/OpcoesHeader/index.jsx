@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Opcoes = styled.ul`
@@ -16,14 +17,18 @@ const Opcao = styled.li`
   cursor: pointer;
 `;
 
-const textoOpcoes = ["CATEGORIAS", "MEUS LIVROS", "FAVORITOS"];
+const textoOpcoes = ["LIVROS", "FAVORITOS"];
 
 function OpcoesHeader() {
   return (
     <Opcoes>
       {/* .map retorna um array e o React entende e sabe com renderizar os elementos visuais presentes, por isso não foi preciso extrair cada elemento do array para serem exibidos */}
       {textoOpcoes.map((texto) => {
-        return <Opcao>{texto}</Opcao>;
+        return (
+          <Link to={`/${texto.toLowerCase()}`}>
+            <Opcao>{texto}</Opcao>
+          </Link>
+        );
       })}
     </Opcoes>
   );
