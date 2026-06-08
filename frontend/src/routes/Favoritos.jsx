@@ -62,16 +62,17 @@ function Favoritos() {
       <div>
         <Titulo>Aqui estão seus livros favoritos:</Titulo>
         <ResultadoContainer>
-          <Resultado>
             {
-              favoritos.message ? <p>{favoritos.message}</p> :  
-                favoritos.map((favorito) => (
-                  <p onClick={() => deleteFavorito(favorito.id)}>
-                    {favorito.titulo}
-                  </p>
-                ))
+              favoritos.message ? 
+              <Resultado>
+                <p>{favoritos.message}</p>
+              </Resultado> :  
+              favoritos.map((favorito) => (
+                <Resultado onClick={() => deleteFavorito(favorito.id)}>
+                  <p>{favorito.titulo}</p>
+                </Resultado>
+              ))
             }
-          </Resultado>
         </ResultadoContainer>
       </div>
     </FavoritosContainer>
