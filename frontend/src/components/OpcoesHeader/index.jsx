@@ -6,9 +6,10 @@ const Opcoes = styled.ul`
 `;
 
 const Opcao = styled.li`
+  color: #0C3C60;
   height: 100%;
   min-width: 120px;
-  font-size: 16px;
+  font-size: 18px;
   padding: 0 5px;
   display: flex;
   justify-content: center;
