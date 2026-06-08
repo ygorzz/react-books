@@ -9,8 +9,15 @@ async function findAll() {
   return JSON.parse(livros);
 }
 
+async function findById(id) {
+  const livros = await findAll();
+  const livro = livros.find(livro => livro.id === id);
+  return livro;
+}
+
 async function save(livro) {
   await fs.promises.writeFile(filePath, JSON.stringify(livro, null, 2));
 }
 
-export { findAll, save };
+
+export { findAll, findById, save };
