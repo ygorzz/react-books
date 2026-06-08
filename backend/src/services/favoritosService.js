@@ -1,6 +1,6 @@
 import Erro404 from "../errors/Erro404.js";
-import * as FavoritosRepository from "../repositories/favoritos.js";
-import * as LivrosRepository from "../repositories/livro.js";
+import * as FavoritosRepository from "../repositories/favoritosRepository.js";
+import * as LivrosRepository from "../repositories/livroRepository.js";
 
 async function getTodosFavoritos() {
   const favoritos = await FavoritosRepository.findAll();

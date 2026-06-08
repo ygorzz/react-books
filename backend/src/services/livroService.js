@@ -1,6 +1,6 @@
 import Erro404 from "../errors/Erro404.js";
 import RequisicaoIncorreta from "../errors/RequisicaoIncorreta.js";
-import * as LivroRepository from "../repositories/livro.js";
+import * as LivroRepository from "../repositories/livroRepository.js";
 
 async function getTodosLivros() {
   const livros = await LivroRepository.findAll();

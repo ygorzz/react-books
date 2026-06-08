@@ -1,4 +1,4 @@
-import { getLivroPorId, getTodosLivros, addLivro, updateLivros, deleteLivros } from "../services/livro.js";
+import { getLivroPorId, getTodosLivros, addLivro, updateLivros, deleteLivros } from "../services/livroService.js";
 
 class LivrosController {
   static async listarLivros(req, res, next) {
@@ -7,7 +7,7 @@ class LivrosController {
       if (livros.length === 0) {
         return res.status(200).json({message: "Não há dados registrados"});
       }
-      res.status(200).json({ livros });
+      res.status(200).json(livros);
     } catch (erro) {
       next(erro);
     }
