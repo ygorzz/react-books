@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 
 // Torna caminho compatível com diferentes SOs 
-const filePath = path.resolve("./livros.json");
+const filePath = path.resolve("./favoritos.json");
 
 async function findAll() {
   const livros = await fs.promises.readFile(filePath, "utf-8");
