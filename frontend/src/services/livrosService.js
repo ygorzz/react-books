@@ -7,6 +7,11 @@ async function getLivros(){
     return response.data || []; // Se não houver livros retornados do server, envia um array vazio para o client
 }
 
+async function deleteLivros(id){
+    await livroAPI.delete(`${id}`);
+}
+
 export {
-    getLivros
+    getLivros,
+    deleteLivros
 }
