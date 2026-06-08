@@ -12,7 +12,7 @@ const LivrosContainer = styled.div`
 const ResultadoContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: center;  
 `;
 
 const Resultado = styled.div`
@@ -31,6 +31,7 @@ const Resultado = styled.div`
     height: 25px;
   }
   &:hover {
+    outline: 1px solid white;
   }
 `;
 
