@@ -9,5 +9,5 @@ class ErroBase extends Error {
     res.status(this.status).json({message: this.message});
   }
 }
-
+  
 export default ErroBase;

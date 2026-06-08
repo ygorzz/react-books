@@ -13,11 +13,11 @@ class LivrosController {
     }
   }
 
-  static async listarLivrosPorId(req, res, next) {
+  static async listarLivroPorId(req, res, next) {
     const id = req.params.id;
     try {
       const livroDesejado = await getLivroPorId(id);
-      res.status(200).json({ livro: livroDesejado });
+      res.status(200).json(livroDesejado);
     } catch (erro) {
       next(erro);
     }

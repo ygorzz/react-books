@@ -6,7 +6,7 @@ const routes = express.Router();
 routes
   .get("/", (req, res) => res.status(200).send("Primeira rota"))
   .get("/livros", LivrosController.listarLivros)
-  .get("/livros/:id", LivrosController.listarLivrosPorId)
+  .get("/livros/:id", LivrosController.listarLivroPorId)
   .post("/livros", LivrosController.adicionarLivro)
   .patch("/livros/:id", LivrosController.atualizaLivros)
   .delete("/livros/:id", LivrosController.removerLivro);

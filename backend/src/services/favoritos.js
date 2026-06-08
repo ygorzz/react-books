@@ -8,23 +8,14 @@ async function getTodosFavoritos() {
   return favoritos;
 }
 
-async function getFavoritoPorId(id) {
-  const favoritos = await FavoritosRepository.findAll();
-  const index = favoritos.findIndex(favorito => favorito.id === id);
-  if (index === -1) {
-    throw new Erro404();
-  }
-  return favoritos[index];
-}
-
 async function addFavorito(id) {
   const livrosAtuais = await LivrosRepository.findAll();
-  const novoFavorito = livrosAtuais.filter(livro => livro.id === id); 
-  if(novoFavorito.length === 0){
+  const favoritosAtuais = await FavoritosRepository.findAll();
+  const novoFavorito = livrosAtuais.find(livro => livro.id === id); 
+  if(!novoFavorito){
     throw new Erro404();
   }
-  const favoritosAtuais = await FavoritosRepository.findAll();
-  favoritosAtuais.push(...novoFavorito);
+  favoritosAtuais.push(novoFavorito);
   await FavoritosRepository.save(favoritosAtuais);
 }
 
@@ -38,4 +29,4 @@ async function deleteFavoritos(id) {
   await FavoritosRepository.save(novosfavoritos);
 }
 
-export { getTodosFavoritos, getFavoritoPorId, addFavorito, deleteFavoritos };
+export { getTodosFavoritos, addFavorito, deleteFavoritos };
