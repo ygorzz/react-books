@@ -1,14 +1,15 @@
 import Input from "../Input/index.js";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { getLivros } from "../../services/livros.js";
+import { getLivros } from "../../services/livrosService.js";
+import { postFavoritos } from "../../services/favoritosService.js";
 
 const SearchContainer = styled.section`
   text-align: center;
   color: #fff;
   padding: 85px 0;
   height: 470px;
-  width: 100%;  
+  width: 100%;
 `;
 
 const Titulo = styled.h2`
@@ -23,22 +24,21 @@ const Subtitulo = styled.h3`
 `;
 
 const Resultado = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
-    cursor: pointer;
-    p {
-        width: 200px;
-    }
-    img {
-        width: 100px;
-    }
-    &:hover {
-        border: 1px solid white;
-    }
-`
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+  p {
+    width: 200px;
+  }
+  img {
+    width: 100px;
+  }
+  &:hover {
+    border: 1px solid white;
+  }
+`;
 
 function Search() {
   // Lógica de estado para acompanhar e renderizar automaticamente o valor da busca na interface
@@ -56,9 +56,14 @@ function Search() {
   }, []);
 
   // Essa função é criada pois useEffect não aceita o uso do async/await
-  async function fetchLivros(){
-    const livrosDaApi = await getLivros()
-    setLivros(livrosDaApi); 
+  async function fetchLivros() {
+    const livrosDaApi = await getLivros();
+    setLivros(livrosDaApi);
+  }
+
+  async function insertFavorito(id) {
+    await postFavoritos(id);
+    alert('Livro adicionado como favorito!');
   }
 
   return (
@@ -70,17 +75,22 @@ function Search() {
         placeholder="Procure aqui sua leitura"
         // Pega o valor do elemento (target) que disparou o evento, atualiza e renderiza na interface
         onChange={(evento) => {
-          const resultado = livros.filter((livro) =>
-            livro.titulo.includes(evento.target.value),
-          );
-          setLivrosPesquisados(resultado);
+          const search = evento.target.value;
+          if (search && search !== " ") {
+            const resultado = livros.filter((livro) =>
+              livro.titulo.includes(search),
+            );
+            setLivrosPesquisados(resultado);
+          } else {
+            setLivrosPesquisados([]);
+          }
         }}
       />
 
       {livrosPesquisados.map((livro) => {
         return (
-          <Resultado>
-                <p>{livro.titulo}</p>
+          <Resultado onClick={() => insertFavorito(livro.id)}>
+            <p>{livro.titulo}</p>
           </Resultado>
         );
       })}
