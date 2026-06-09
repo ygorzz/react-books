@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { deleteFavoritos, getFavoritos } from "../services/favoritosService.js";
+import trash from "../imagens/trash.svg";
 
 const FavoritosContainer = styled.div`
   width: 100vw;
@@ -25,6 +26,9 @@ const Resultado = styled.div`
   p {
     width: 200px;
     color: #fff;
+  }
+  img {
+    height: 25px;
   }
   &:hover {
     border: 1px solid white;
@@ -51,9 +55,9 @@ function Favoritos() {
     setLivrosFavoritos(favoritosDaApi);
   }
 
-  async function deleteFavorito(id){
+  async function deleteFavorito(id) {
     await deleteFavoritos(id);
-    alert('Livro removido de favoritos!');
+    alert("Livro removido de favoritos!");
     fetchFavoritos();
   }
 
@@ -62,17 +66,28 @@ function Favoritos() {
       <div>
         <Titulo>Aqui estão seus livros favoritos:</Titulo>
         <ResultadoContainer>
-            {
-              favoritos.message ? 
+          {favoritos.message ? (
+            <Resultado>
+              <p>{favoritos.message}</p>
+            </Resultado>
+          ) : (
+            favoritos.map((favorito) => (
               <Resultado>
-                <p>{favoritos.message}</p>
-              </Resultado> :  
-              favoritos.map((favorito) => (
-                <Resultado onClick={() => deleteFavorito(favorito.id)} key={favorito.id}>
-                  <p>{favorito.titulo}</p>
-                </Resultado>
-              ))
-            }
+                <p>{favorito.titulo}</p>
+                <button
+                  aria-label="Remover livro"
+                  onClick={() => deleteFavorito(favorito.id)}
+                  style={{
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  <img src={trash} alt="botão de remover"></img>
+                </button>
+              </Resultado>
+            ))
+          )}
         </ResultadoContainer>
       </div>
     </FavoritosContainer>
