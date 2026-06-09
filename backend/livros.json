@@ -1,8 +1,20 @@
 [
   {
     "titulo": "O Silmarillion",
-    "autor": "Tolkien",
+    "autor": "ygor",
     "id": "c0856fe1-6634-4bd8-b839-988b07f4dc13",
+    "favorito": true
+  },
+  {
+    "titulo": "O Senhor dos anéis",
+    "autor": "Tolkien",
+    "id": "4f5e6213-7562-491d-8b13-0ee37965099e",
+    "favorito": false
+  },
+  {
+    "titulo": "O Hobbit",
+    "autor": "Tolkien",
+    "id": "dda4b519-f230-4fcd-aa99-3893bad6f907",
     "favorito": true
   }
 ]

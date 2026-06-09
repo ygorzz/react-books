@@ -8,7 +8,8 @@ async function getFavoritos(){
 }
 
 async function postFavoritos(id) {
-    await favoritosAPI.post(`/${id}`);
+    const response = await favoritosAPI.post(`/${id}`);
+    return response.data;
 }
 
 async function deleteFavoritos(id){

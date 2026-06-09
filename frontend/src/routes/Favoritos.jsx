@@ -73,7 +73,7 @@ function Favoritos() {
             </Resultado>
           ) : (
             favoritos.map((favorito) => (
-              <Resultado>
+              <Resultado key={favorito.id}>
                 <p>{favorito.titulo}</p>
                 <button
                   aria-label="Remover livro"
