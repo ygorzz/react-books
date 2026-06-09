@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { deleteLivros, getLivros } from "../services/livrosService.js";
+import { deleteLivros, getLivros, insertLivros, updateLivros } from "../services/livrosService.js";
+import { postFavoritos } from "../services/favoritosService.js";
+import Form from "../components/FormLivros/index.jsx";
+import Input from "../components/Inputs/InputForm/index.jsx";
+import { BotoesForm, Botao } from "../components/BotoesForm/index.jsx";
 import trash from "../imagens/trash.svg";
+import pencil from "../imagens/pencil.svg";
 
 const LivrosContainer = styled.div`
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   background-image: linear-gradient(90deg, #002f52 35%, #326589 165%);
 `;
 
 const ResultadoContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;  
+  justify-content: center;
 `;
 
 const Resultado = styled.div`
@@ -23,15 +28,16 @@ const Resultado = styled.div`
   cursor: pointer;
   text-align: center;
   padding: 0 100px;
+  border: 1px solid transparent;
   p {
     width: 200px;
     color: #fff;
   }
-  img{
+  img {
     height: 25px;
   }
   &:hover {
-    outline: 1px solid white;
+    border-color: white;
   }
 `;
 
@@ -43,8 +49,12 @@ const Titulo = styled.h2`
   padding-top: 35px;
 `;
 
+const FORM_INICIAL = { titulo: "", autor: "" };
+
 function Livros() {
   const [livros, setLivros] = useState([]);
+  const [form, setForm] = useState(FORM_INICIAL);
+  const [editandoId, setEditandoId] = useState(null);
 
   useEffect(() => {
     fetchLivros();
@@ -55,30 +65,118 @@ function Livros() {
     setLivros(livrosDaApi);
   }
 
-  async function deleteLivro(id){
+  async function deleteLivro(id) {
     await deleteLivros(id);
     fetchLivros();
   }
 
+  async function insertFavorito(id) {
+    await postFavoritos(id);
+    alert("Livro adicionado como favorito!");
+  }
+  
+  async function updateLivro(id, form) {
+    await updateLivros(id, form);
+    fetchLivros();
+  }
+  
+  async function insertLivro(form) {
+    await insertLivros(form);
+    fetchLivros();
+  }
+
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  function handleEditar(livro) {
+    setEditandoId(livro.id);
+    setForm({ titulo: livro.titulo, autor: livro.autor ?? "" });
+  }
+
+  function handleCancelar() {
+    setEditandoId(null);
+    setForm(FORM_INICIAL);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (editandoId) {
+      const id = editandoId;
+      await updateLivro(id, form)
+    } else {
+      await insertLivro(form); // Objeto com os campos inseridos pelo usuário
+    }
+    handleCancelar();
+  }
+
   return (
     <LivrosContainer>
-      <div>
-        <Titulo>Aqui estão seus livros:</Titulo>
-        <ResultadoContainer>
-            {
-              livros.message ? 
-              <Resultado>
-                <p>{livros.message}</p>
-              </Resultado> :  
-              livros.map((favorito) => (
-                <Resultado>
-                  <p>{favorito.titulo}</p>
-                  <img src={trash} alt="lixeira" onClick={() => deleteLivro(favorito.id)} />
-                </Resultado>
-              ))
-            }
-        </ResultadoContainer>
-      </div>
+      <Titulo>{editandoId ? "Editar livro:" : "Adicionar livro:"}</Titulo>
+
+      <Form onSubmit={handleSubmit}>
+        {/* A cada tecla digitada o handeChange altera o value do input */}
+        <Input
+          name="titulo"
+          placeholder="Título"
+          value={form.titulo}
+          onChange={handleChange}
+        />
+        <Input
+          name="autor"
+          placeholder="Autor"
+          value={form.autor}
+          onChange={handleChange}
+        />
+        <BotoesForm>
+          {editandoId && (
+            <Botao type="button" variante="secundario" onClick={handleCancelar}>
+              Cancelar
+            </Botao>
+          )}
+          <Botao type="submit">
+            {editandoId ? "Salvar alterações" : "Adicionar"}
+          </Botao>
+        </BotoesForm>
+      </Form>
+
+      <Titulo>Aqui estão seus livros:</Titulo>
+      <ResultadoContainer>
+        {livros.message ? (
+          <Resultado>
+            <p>{livros.message}</p>
+          </Resultado>
+        ) : (
+          livros.map((livro) => (
+            <Resultado key={livro.id}>
+              <p onClick={() => insertFavorito(livro.id)}>{livro.titulo}</p>
+              <button
+                aria-label="Remover livro"
+                onClick={() => deleteLivro(livro.id)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <img src={trash} alt="botão de remover"></img>
+              </button>
+              <button
+                aria-label="Editar livro"
+                onClick={() => handleEditar(livro)}
+                style={{
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <img src={pencil} alt="botão de editar"></img>
+              </button>
+            </Resultado>
+          ))
+        )}
+      </ResultadoContainer>
     </LivrosContainer>
   );
 }

@@ -1,5 +1,6 @@
 import Erro404 from "../errors/Erro404.js";
 import RequisicaoIncorreta from "../errors/RequisicaoIncorreta.js";
+import gerarId from "../helpers/gerarId.js";
 import * as LivroRepository from "../repositories/livroRepository.js";
 
 async function getTodosLivros() {
@@ -17,9 +18,12 @@ async function getLivroPorId(id) {
 }
 
 async function addLivro(livro) {
-  if (!livro.titulo) {
-    throw new RequisicaoIncorreta("Título do livro é obrigatório");
+  if (!livro.titulo || !livro.autor) {
+    throw new RequisicaoIncorreta("Título e Autor do livro são obrigatórios");
   }
+  const id = gerarId();
+  livro.id = id;
+  livro.favorito = false;
   const livrosAtuais = await LivroRepository.findAll();
   livrosAtuais.push(livro);
   await LivroRepository.save(livrosAtuais);

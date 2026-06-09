@@ -15,8 +15,8 @@ async function findById(id) {
   return livro;
 }
 
-async function save(livro) {
-  await fs.promises.writeFile(filePath, JSON.stringify(livro, null, 2));
+async function save(livros) {
+  await fs.promises.writeFile(filePath, JSON.stringify(livros, null, 2));
 }
 
 

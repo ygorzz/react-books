@@ -1,8 +1,7 @@
-import Input from "../Input/index.js";
+import InputSearch from "../Inputs/InputSearch/index.jsx";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { getLivros } from "../../services/livrosService.js";
-import { postFavoritos } from "../../services/favoritosService.js";
 
 const SearchContainer = styled.section`
   text-align: center;
@@ -60,16 +59,11 @@ function Search() {
     setLivros(livrosDaApi);
   }
 
-  async function insertFavorito(id) {
-    await postFavoritos(id);
-    alert('Livro adicionado como favorito!');
-  }
-
   return (
     <SearchContainer>
       <Titulo>Já sabe por onde começar?</Titulo>
       <Subtitulo>Procure sua próxima leitura.</Subtitulo>
-      <Input
+      <InputSearch
         type="text"
         placeholder="Procure aqui sua leitura"
         // Pega o valor do elemento (target) que disparou o evento, atualiza e renderiza na interface
@@ -88,7 +82,7 @@ function Search() {
 
       {livrosPesquisados.map((livro) => {
         return (
-          <Resultado onClick={() => insertFavorito(livro.id)}>
+          <Resultado>
             <p>{livro.titulo}</p>
           </Resultado>
         );

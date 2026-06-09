@@ -68,7 +68,7 @@ function Favoritos() {
                 <p>{favoritos.message}</p>
               </Resultado> :  
               favoritos.map((favorito) => (
-                <Resultado onClick={() => deleteFavorito(favorito.id)}>
+                <Resultado onClick={() => deleteFavorito(favorito.id)} key={favorito.id}>
                   <p>{favorito.titulo}</p>
                 </Resultado>
               ))
