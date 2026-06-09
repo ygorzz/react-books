@@ -41,6 +41,7 @@ const Titulo = styled.h2`
   text-align: center;
   width: 100%;
   padding-top: 35px;
+  margin: 0;
 `;
 
 function Favoritos() {

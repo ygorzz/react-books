@@ -47,6 +47,7 @@ const Titulo = styled.h2`
   text-align: center;
   width: 100%;
   padding-top: 35px;
+  margin: 0;
 `;
 
 const FORM_INICIAL = { titulo: "", autor: "" };
