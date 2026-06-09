@@ -5,7 +5,7 @@ import { createGlobalStyle } from "styled-components";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/index.jsx";
 import Favoritos from "./routes/Favoritos.jsx";
-import MeusLivros from "./routes/MeusLivros.jsx";
+import MeusLivros from "./routes/Livros.jsx";
 
 const GlobalStyle = createGlobalStyle`
   body {
