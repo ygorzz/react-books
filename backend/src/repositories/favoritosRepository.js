@@ -2,15 +2,13 @@ import fs from "fs";
 import path from "path";
 
 // Torna caminho compatível com diferentes SOs 
-const filePath = path.resolve("./favoritos.json");
+const filePath = path.resolve("./livros.json");
 
 async function findAll() {
-  const favoritos = await fs.promises.readFile(filePath, "utf-8");
-  return JSON.parse(favoritos);
+  const data = await fs.promises.readFile(filePath, "utf-8");
+  const livros = JSON.parse(data);
+  const favoritos = livros.filter(livro => livro.favorito);
+  return favoritos;
 }
 
-async function save(favoritos) {
-  await fs.promises.writeFile(filePath, JSON.stringify(favoritos, null, 2));
-}
-
-export { findAll, save };
+export { findAll };
