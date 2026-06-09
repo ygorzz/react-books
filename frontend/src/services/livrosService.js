@@ -11,7 +11,17 @@ async function deleteLivros(id){
     await livroAPI.delete(`${id}`);
 }
 
+async function insertLivros({titulo, autor}){
+    await livroAPI.post(`/`, {titulo, autor}); // O segundo argumento do post é o corpo da requisição
+}
+
+async function updateLivros(id, {titulo, autor}) {
+    await livroAPI.patch(`${id}`, {titulo, autor})
+}
+
 export {
     getLivros,
-    deleteLivros
+    deleteLivros,
+    insertLivros,
+    updateLivros
 }
