@@ -8,6 +8,7 @@ const HeaderContainer = styled.header`
   background-color: #fff;
   display: flex;
   justify-content: center;
+  align-items: center;
 `;
 
 // Herdando estilização e alterando props de um Styled Component:
