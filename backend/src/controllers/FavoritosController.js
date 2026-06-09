@@ -17,7 +17,7 @@ class FavoritosController {
     const id = req.params.id;
     try {
       await addFavorito(id);
-      res.status(200).json({message: "Livro favorito adicionado com sucesso!"});
+      res.status(201).json({message: "Livro adicionado como favorito!"});
     } catch (erro) {
       next(erro);
     }

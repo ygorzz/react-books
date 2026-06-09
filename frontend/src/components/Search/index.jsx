@@ -82,7 +82,7 @@ function Search() {
 
       {livrosPesquisados.map((livro) => {
         return (
-          <Resultado>
+          <Resultado key={livro.id}>
             <p>{livro.titulo}</p>
           </Resultado>
         );

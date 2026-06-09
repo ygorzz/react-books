@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Titulo from "../Titulo/index.js";
+import Titulo from "../Titulo/index.jsx";
 import { Link } from "react-router-dom";
 
 const Card = styled.div`

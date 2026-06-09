@@ -26,7 +26,7 @@ function OpcoesHeader() {
       {/* .map retorna um array e o React entende e sabe com renderizar os elementos visuais presentes, por isso não foi preciso extrair cada elemento do array para serem exibidos */}
       {textoOpcoes.map((texto) => {
         return (
-          <Link to={`/${texto.toLowerCase()}`}>
+          <Link to={`/${texto.toLowerCase()}`} key={texto}>
             <Opcao>{texto}</Opcao>
           </Link>
         );

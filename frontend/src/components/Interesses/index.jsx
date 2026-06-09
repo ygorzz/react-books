@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Titulo from "../Titulo/index.js";
+import Titulo from "../Titulo/index.jsx";
 import CardRecomendacao from "../CardRecomendacao/index.jsx";
 import livroImg from "../../imagens/oHobbit.jpeg";
 

@@ -8,15 +8,19 @@ async function getLivros(){
 }
 
 async function deleteLivros(id){
-    await livroAPI.delete(`${id}`);
+    const response = await livroAPI.delete(`${id}`);
+    // O Axios já converte para objeto javascript automaticamente
+    return response.data;
 }
 
 async function insertLivros({titulo, autor}){
-    await livroAPI.post(`/`, {titulo, autor}); // O segundo argumento do post é o corpo da requisição
-}
+    const response = await livroAPI.post(`/`, {titulo, autor}); // O segundo argumento do post é o corpo da requisição
+    return response.data;
+;}
 
 async function updateLivros(id, {titulo, autor}) {
-    await livroAPI.patch(`${id}`, {titulo, autor})
+    const response = await livroAPI.patch(`${id}`, {titulo, autor})
+    return response.data;
 }
 
 export {

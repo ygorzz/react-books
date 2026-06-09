@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { deleteLivros, getLivros, insertLivros, updateLivros } from "../services/livrosService.js";
+import {
+  deleteLivros,
+  getLivros,
+  insertLivros,
+  updateLivros,
+} from "../services/livrosService.js";
 import { postFavoritos } from "../services/favoritosService.js";
 import Form from "../components/FormLivros/index.jsx";
 import Input from "../components/Inputs/InputForm/index.jsx";
@@ -62,30 +67,44 @@ function Livros() {
   }, []);
 
   async function fetchLivros() {
-    const livrosDaApi = await getLivros();
-    setLivros(livrosDaApi);
+    try {
+      const livrosDaApi = await getLivros();
+      setLivros(livrosDaApi);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function deleteLivro(id) {
-    await deleteLivros(id);
-    fetchLivros();
+    try {
+      const data = await deleteLivros(id);
+      alert(data.message);
+      fetchLivros();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   async function insertFavorito(id) {
-    await postFavoritos(id);
-    alert("Livro adicionado como favorito!");
+    try {
+      const data = await postFavoritos(id);
+      alert(data.message);
+    } catch (error) {
+      console.log(error);
+    }
   }
-  
+
   async function updateLivro(id, form) {
-    await updateLivros(id, form);
-    fetchLivros();
-  }
-  
-  async function insertLivro(form) {
-    await insertLivros(form);
+    const data = await updateLivros(id, form);
+    alert(data.message);
     fetchLivros();
   }
 
+    async function insertLivro(form) {
+      const data = await insertLivros(form);
+      alert(data.message);
+      fetchLivros();
+    }
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -105,9 +124,19 @@ function Livros() {
     e.preventDefault();
     if (editandoId) {
       const id = editandoId;
-      await updateLivro(id, form)
+      try {
+        await updateLivro(id, form);
+      } catch (error) {
+        const errorMessage = error.response.data.message; 
+        alert(errorMessage);
+      }
     } else {
-      await insertLivro(form); // Objeto com os campos inseridos pelo usuário
+      try {
+        await insertLivro(form); // Objeto com os campos inseridos pelo usuário
+      } catch (error) {
+        const errorMessage = error.response.data.message; 
+        alert(errorMessage);
+      }
     }
     handleCancelar();
   }
