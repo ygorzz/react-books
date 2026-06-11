@@ -21,6 +21,6 @@ const Botao = styled.button`
 `;
 
 export {
-    BotoesForm,
-    Botao
-}
+  BotoesForm,
+  Botao,
+};
