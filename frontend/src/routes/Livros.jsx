@@ -100,11 +100,11 @@ function Livros() {
     fetchLivros();
   }
 
-    async function insertLivro(form) {
-      const data = await insertLivros(form);
-      alert(data.message);
-      fetchLivros();
-    }
+  async function insertLivro(form) {
+    const data = await insertLivros(form);
+    alert(data.message);
+    fetchLivros();
+  }
 
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
