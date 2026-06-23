@@ -1,40 +1,15 @@
-import React from "react";
+// src/main.jsx
 import ReactDOM from "react-dom/client";
-import Home from "./routes/Home.jsx";
-import { createGlobalStyle } from "styled-components";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Header from "./components/Header/index.jsx";
-import Favoritos from "./routes/Favoritos.jsx";
-import MeusLivros from "./routes/Livros.jsx";
+import GlobalStyle from "./styles/GlobalStyle";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import Favoritos from "./pages/Favoritos";
+import MeusLivros from "./pages/MeusLivros";
 
-const GlobalStyle = createGlobalStyle`
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-  }
-  
-  li {
-    list-style: none;
-  }
-
-  a {
-    text-decoration: none;
-  }
-`;
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    {/* CSS padrão em toda página, geralmente injetado no <head> do HTML */}
     <GlobalStyle />
     {/* BrowserRouter -> informa a aplicação que existirá roteamento de componentes */}
     <BrowserRouter>
@@ -45,5 +20,5 @@ root.render(
         <Route path="/livros" element={<MeusLivros />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

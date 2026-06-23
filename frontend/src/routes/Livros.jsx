@@ -72,6 +72,7 @@ function Livros() {
       setLivros(livrosDaApi);
     } catch (error) {
       console.log(error);
+      alert("Erro ao carregar livros. Tente novamente.");
     }
   }
 
@@ -117,7 +118,7 @@ function Livros() {
 
   function handleCancelar() {
     setEditandoId(null);
-    setForm(FORM_INICIAL);
+    setForm(FORM_INICIAL);  
   }
 
   async function handleSubmit(e) {
