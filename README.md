@@ -44,26 +44,9 @@ react-books/
 ├── frontend/                          # Aplicação React
 │   ├── src/
 │   │   ├── components/                # Componentes reutilizáveis
-│   │   │   ├── BotoesForm/
-│   │   │   ├── CardRecomendacao/
-│   │   │   ├── FormLivros/
-│   │   │   ├── Header/
-│   │   │   ├── IconesHeader/
-│   │   │   ├── InputForm/
-│   │   │   ├── InputSearch/
-│   │   │   ├── Interesses/
-│   │   │   ├── Logo/
-│   │   │   ├── OpcoesHeader/
-│   │   │   ├── Search/
-│   │   │   └── Titulo/
 │   │   ├── imagens/
 │   │   ├── routes/                    # Páginas/Rotas
-│   │   │   ├── Home.jsx
-│   │   │   ├── Livros.jsx
-│   │   │   └── Favoritos.jsx
 │   │   ├── services/                  # Integração com API
-│   │   │   ├── livrosService.js
-│   │   │   └── favoritosService.js
 │   │   └── main.jsx
 │   ├── index.html
 │   ├── package.json
@@ -73,26 +56,12 @@ react-books/
 ├── backend/                           # API Express
 │   ├── src/
 │   │   ├── controllers/               # Lógica de negócio
-│   │   │   ├── LivrosController.js
-│   │   │   └── FavoritosController.js
 │   │   ├── repositories/              # Acesso a dados
-│   │   │   ├── livroRepository.js
-│   │   │   └── favoritosRepository.js
 │   │   ├── services/                  # Serviços de domínio
-│   │   │   ├── livroService.js
-│   │   │   └── favoritosService.js
 │   │   ├── routes/                    # Definição de rotas
-│   │   │   ├── index.js
-│   │   │   ├── livrosRoutes.js
-│   │   │   └── favoritosRoutes.js
 │   │   ├── middlewares/
-│   │   │   └── manipuladorErros.js
 │   │   ├── errors/                    # Classes de erro customizadas
-│   │   │   ├── ErroBase.js
-│   │   │   ├── Erro404.js
-│   │   │   └── RequisicaoIncorreta.js
 │   │   ├── helpers/
-│   │   │   └── gerarId.js
 │   │   └── app.js
 │   ├── server.js
 │   ├── livros.json
